@@ -13,17 +13,9 @@ export class PipeTranslate implements PipeTransform {
     }
     
     transform(obj): any{
-        return obj
-
-        // return this.getTranslate(obj,(value)=>{
-        //     return value;
-        // })
-    }
-
-    getTranslate(obj,cb){
         let arrPath = obj.split(".");
         let db = new PouchDB('translate');
-        db.allDocs({
+        return db.allDocs({
             include_docs: true,
             attachments: true
         }).then((doc) => {
@@ -32,12 +24,15 @@ export class PipeTranslate implements PipeTransform {
                 var pageT = docPage[0]
                 var traducao = pageT ? pageT.doc["traducoes"].filter(result =>{ return result.campo === arrPath[1]}) : null
                 this.text = traducao[0] ? traducao[0].traducao: ""
+                return this.text;
             }
-
-            return "asdfçlaksjdfaçsldkj";
-
           }).catch(function (err) {
             console.log(err);
           });
+
+    }
+
+    getTranslate(obj,cb){
+        
     }
 }

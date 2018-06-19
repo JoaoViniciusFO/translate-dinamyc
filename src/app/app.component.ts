@@ -7,46 +7,57 @@ import PouchDB from 'pouchdb';
 import { HomePage } from '../pages/home/home';
 @Component({
   templateUrl: 'app.html',
-  providers:[Service]
+  providers: [Service]
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage: any = HomePage;
   public db: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private service: Service) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
       this.service.getTranslates("pt")
-      .subscribe(
-        res =>{
-          res.forEach(element => {
-            this.setTranslates(element);
-          });
-        },
-        erro =>{
-          console.log(erro)
-        }
-      );
+        .subscribe(
+          res => {
+            this.setTranslates(res);
+            // res.forEach(element => {
+            //   this.setTranslates(element);
+            // });
+          },
+          erro => {
+            console.log(erro)
+          }
+        );
     });
   }
 
-  setTranslates(pag){
-    this.resetDB();
+  setTranslates(pag: Array<any>) {
+    console.log("set translate: ", pag);
+    // this.resetDB();
     this.db = new PouchDB("translate");
-    this.db.allDocs().then((res)=>{
-      console.log(res)
+    pag.map(item => {
+      item._id = item.id;
+      delete (item.id);
+      return item;
+    }).map(item => {
+      this.db.put(item, function (err, response) {
+        if (err) { return console.log(err); } else {
+          console.log(response);
+        }
+      });
     });
-    this.db.post(pag).then(function (response) {
-      console.log(response);
-    }).catch(function (err) {
-      console.log(err);
-    });
+    // this.db.allDocs().then((res)=>{
+    //   console.log("res: ", res)
+    // });
+    // this.db.post(pag).then(function (response) {
+    //   console.log("response: ", response);
+    // }).catch(function (err) {
+    //   console.log(err);
+    // });
   }
 
-  resetDB(){
+  resetDB() {
     this.db = new PouchDB("translate");
     this.db.destroy();
   }
