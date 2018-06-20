@@ -21,9 +21,6 @@ export class MyApp {
         .subscribe(
           res => {
             this.setTranslates(res);
-            // res.forEach(element => {
-            //   this.setTranslates(element);
-            // });
           },
           erro => {
             console.log(erro)
@@ -47,14 +44,6 @@ export class MyApp {
         }
       });
     });
-    // this.db.allDocs().then((res)=>{
-    //   console.log("res: ", res)
-    // });
-    // this.db.post(pag).then(function (response) {
-    //   console.log("response: ", response);
-    // }).catch(function (err) {
-    //   console.log(err);
-    // });
   }
 
   resetDB() {
