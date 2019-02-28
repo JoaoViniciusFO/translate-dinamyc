@@ -31,7 +31,6 @@ export class MyApp {
 
   setTranslates(pag: Array<any>) {
     console.log("set translate: ", pag);
-    // this.resetDB();
     this.db = new PouchDB("translate");
     pag.map(item => {
       item._id = item.id;
