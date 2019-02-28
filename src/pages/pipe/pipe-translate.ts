@@ -12,6 +12,7 @@ export class PipeTranslate implements PipeTransform {
 
     constructor(){
         this.publish();
+	console.log("rolouuuuu!!")
     }
 
     public traducao$: BehaviorSubject<String> = new BehaviorSubject("Ok");
