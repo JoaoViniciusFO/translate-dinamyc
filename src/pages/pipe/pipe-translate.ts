@@ -19,7 +19,6 @@ export class PipeTranslate implements PipeTransform {
     transform(obj): any{
         let arrPath = obj.split(".");
         let db = new PouchDB('translate');
-        console.log("agorafunfa")
         return this.traducao$;
         
         // return db.allDocs({
