@@ -6,7 +6,7 @@ import { Observable } from "rxjs/Observable";
 export class Service {
     public _url: string;
     constructor(private _http: HttpClient){
-        this._url = "http://192.168.1.143:8080/public/traducao/";
+        this._url = "DEFAULT_URI";
     }
 
     getTranslates(language: string): Observable<any>{
